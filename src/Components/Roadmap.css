@@ -1,6 +1,15 @@
 .roadmap {
     width: 80%;
-    height: 1000px;
+    height: 1100px;
+    margin-left: 10%;
+    margin-right: 10%;
+    border: 3px solid;
+
+}
+
+.roadmap-long {
+    width: 80%;
+    height: 1600px;
     margin-left: 10%;
     margin-right: 10%;
     border: 3px solid;
