@@ -1,0 +1,27 @@
+.roadmap {
+    width: 80%;
+    height: 1000px;
+    margin-left: 10%;
+    margin-right: 10%;
+    border: 3px solid;
+
+}
+
+.roadmap-content {
+    background-color: #fff;
+    color: #fff;
+    position: absolute;
+    border-radius: 5px;
+    border: 1px solid;
+    padding: 1% 2% 1% 2%;
+    max-width: 200px;
+}
+
+h1 {
+    color: #000;
+    font-size: 80%;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+
