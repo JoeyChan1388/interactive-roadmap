@@ -128,7 +128,14 @@ const Roadmap = (props) => {
 
                 <RoadmapContent title={'Implementation'} path={'/roadmapcontent/JSImplementation'} topmargin={15} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
                 
+                <RoadmapContent title={'Inline JS'} path={'/roadmapcontent/JSInline'} topmargin={13} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
+                <RoadmapContent title={'SRC Tag'} path={'/roadmapcontent/JSExternal'} topmargin={17} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
+
                 <RoadmapContent title={'Data'} path={'/roadmapcontent/Data'} topmargin={45} leftmargin={columnwidth * 2 + 2} ></RoadmapContent>
+
+                <RoadmapContent title={'Data Types'} path={'/roadmapcontent/JSDataTypes'} topmargin={45} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Variables'} path={'/roadmapcontent/JSVariables'} topmargin={35} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Primatives'} path={'/roadmapcontent/JSPrimatives'} topmargin={55} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
 
                 <RoadmapContent title={'Functionality'} path={'/roadmapcontent/Functionality'} topmargin={80} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
 
