@@ -163,10 +163,10 @@ const Roadmap = (props) => {
                 <RoadmapContent title={'Callbacks'} path={'/roadmapcontent/JSCallbacks'} topmargin={67} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
                 <RoadmapContent title={'Promises'} path={'/roadmapcontent/JSPromises'} topmargin={71} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Callbacks'} path={'/roadmapcontent/JSCallbacks'} topmargin={78} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
-                <RoadmapContent title={'Promises'} path={'/roadmapcontent/JSPromises'} topmargin={82} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Fetch API'} path={'/roadmapcontent/JSFetchAPI'} topmargin={80} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Fetch API'} path={'/roadmapcontent/JSFetchAPI'} topmargin={78} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Requests'} path={'/roadmapcontent/JSRequests'} topmargin={78} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Responses'} path={'/roadmapcontent/JSResponses'} topmargin={82} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
 
                 <RoadmapContent title={'Finish'} path={'#'} topmargin={95} leftmargin={columnwidth * 2 + 1} ></RoadmapContent>
             </div>
