@@ -9,6 +9,7 @@ function Signin() {
             <input type="text" className="input-long" placeholder="Email or Username"></input>
             <input type="password" className="input-long" placeholder="Password"></input>
             <input type="submit" className="btn-submit" value="Sign in"/>
+            <br/>
             <a href="/signup" className="link"> Need an Account?</a>
         </div>
     </div>

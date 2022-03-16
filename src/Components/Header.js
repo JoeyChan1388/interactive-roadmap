@@ -12,7 +12,7 @@ const Header = () => {
           <a href="/roadmaps"> Roadmaps</a>
           <a href="/signup"> Register</a>
           <a href="/contact"> Contact Us</a>
-          <a class="cta" href="/signin"><button>Sign In</button></a>
+          <a class="cta" href="/login"><button>Sign In</button></a>
         </div>
       </header>
 

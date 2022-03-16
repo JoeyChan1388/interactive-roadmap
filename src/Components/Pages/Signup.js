@@ -12,6 +12,7 @@ function Signup() {
             <input type="text" className="input-long" placeholder="Username"></input>
             <input type="password" className="input-long" placeholder="Password"></input>
             <input type="submit" className="btn-submit" value="Sign up"/>
+            <br/>
             <a href="/login" className="link"> Have an Account?</a>
         </div>
     </div>
