@@ -1,0 +1,52 @@
+.about-img
+{
+
+    position: absolute;
+    width: 1700px;
+    height: 600px;
+    left: 0px;
+    top: 152px;
+    mix-blend-mode:normal;
+    background-color: rgba(0, 0, 0, 0);
+
+}
+
+.about-title
+{
+
+position: absolute;
+width: 694px;
+height: 244px;
+left: 800px;
+top: 200px;
+
+font-family: 'Cabin Sketch';
+font-style: normal;
+font-weight: 400;
+font-size: 70px;
+line-height: 82px;
+
+color: #01000a;
+background-color: rgba(0, 0, 0, 0);
+}
+
+
+.header-about
+{
+position: absolute;
+width: 1920px;
+height: 200px;
+left: 60px;
+top: 400px;
+
+
+font-family:'Times New Roman', Times, serif;
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 10x;
+
+color: #01000a;
+background-color: rgba(0, 0, 0, 0);
+
+}

@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Poppins:wght@300&display=swap');
 
+
+.logo
+{
+    top: 0%;
+    position: absolute;
+    left: 60px;
+    
+}
 .navbar a, button {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
@@ -7,6 +15,8 @@
     color: #edf0f1;
     text-decoration: none;
     width: 1fr;
+    
+
 }
 
 .navbar {
@@ -14,6 +24,8 @@
     grid-template-columns: repeat(5, 1fr);
     width: 100%;
     text-align: center;
+    
+    
 }
 
 header {
@@ -21,23 +33,29 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 30px 10%;
+    height: 150px;
+    
 }
 
 .nav_links {
     list-style: none;
+    
 }
 
 .navbar a {
     transition: all 0.3s ease 0s;
+    
 }
 
 .navbar a:hover {
     color: #0088a9;
+    
 
 }
 
 .logo {
     cursor: pointer;
+    
 }
 
 button {
@@ -47,8 +65,11 @@ button {
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease 0s;
+    
 }
 
 button:hover {
-    background-color: rgba(0,136,169,0.8);
+    background-color: rgba(4, 95, 117, 0.8);
+    
 }
+

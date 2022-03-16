@@ -1,0 +1,96 @@
+.small-title {
+    position: absolute;
+    width: 575px;
+    height: 48px;
+    left: 64px;
+    top: 0px;
+    
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 550px;
+    letter-spacing: 0.29em;
+    text-transform: uppercase;
+    
+    color: rgba(124, 170, 240, 0.671);
+    background-color: rgba(0, 0, 0, 0);
+    
+    }
+    
+    .big-title {
+    position: absolute;
+    width: 694px;
+    height: 244px;
+    left: 60px;
+    top: 286px;
+    
+    font-family: 'Cabin Sketch';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 70px;
+    line-height: 82px;
+    
+    color: #bab7fa;
+    background-color: rgba(0, 0, 0, 0);
+    }
+    .vector {
+    position: absolute;
+    width: 300px;
+    height: 5px;
+    left: 60px;
+    top: 530px;
+    
+    border: 3px solid #00A2FD;
+    box-sizing: border-box;
+    }
+    
+    .middle-title
+    {
+    position: absolute;
+    width: 1000px;
+    height: 50px;
+    left: 640px;
+    top: 600px;
+    
+    font-family: 'Caladea';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 83px;
+    
+    color: #fdfdfd;
+    background-color: rgba(0, 0, 0, 0);
+    }
+    
+    .btn-start
+    {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    
+    position: absolute;
+    width: 190px;
+    height: 50px;
+    left: 890px;
+    top: 724px;
+    
+    background: #113f96;
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0);
+    border-radius: 31px;
+    }
+    
+    .background-img
+    {
+    position: absolute;
+    width: 1920px;
+    height: 955px;
+    left: 0px;
+    top: 120px;
+    
+    
+    mix-blend-mode:overlay;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
