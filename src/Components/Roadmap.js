@@ -131,13 +131,42 @@ const Roadmap = (props) => {
                 <RoadmapContent title={'Inline JS'} path={'/roadmapcontent/JSInline'} topmargin={13} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
                 <RoadmapContent title={'SRC Tag'} path={'/roadmapcontent/JSExternal'} topmargin={17} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Data'} path={'/roadmapcontent/Data'} topmargin={45} leftmargin={columnwidth * 2 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Data'} path={'/roadmapcontent/JSData'} topmargin={45} leftmargin={columnwidth * 2 + 2} ></RoadmapContent>
 
                 <RoadmapContent title={'Data Types'} path={'/roadmapcontent/JSDataTypes'} topmargin={45} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
                 <RoadmapContent title={'Variables'} path={'/roadmapcontent/JSVariables'} topmargin={35} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
+
+                <RoadmapContent title={'Let'} path={'/roadmapcontent/JSVariablesLet'} topmargin={31} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Var'} path={'/roadmapcontent/JSVariablesVar'} topmargin={35} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Const'} path={'/roadmapcontent/JSVariablesConst'} topmargin={39} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+
                 <RoadmapContent title={'Primatives'} path={'/roadmapcontent/JSPrimatives'} topmargin={55} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Functionality'} path={'/roadmapcontent/Functionality'} topmargin={80} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
+                <RoadmapContent title={'Null'} path={'/roadmapcontent/JSNull'} topmargin={51} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Boolean'} path={'/roadmapcontent/JSBoolean'} topmargin={55} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Number'} path={'/roadmapcontent/JSNumber'} topmargin={59} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+
+                <RoadmapContent title={'Data Structures'} path={'/roadmapcontent/JSDataStructures'} topmargin={45} leftmargin={columnwidth * 3} ></RoadmapContent>
+
+                <RoadmapContent title={'JSON'} path={'/roadmapcontent/JSDataStructuresJSON'} topmargin={43} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Arrays'} path={'/roadmapcontent/JSDataStructuresArrays'} topmargin={47} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+
+                <RoadmapContent title={'Functionality'} path={'/roadmapcontent/JSFunctionality'} topmargin={80} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
+
+                <RoadmapContent title={'Events'} path={'/roadmapcontent/JSEvents'} topmargin={80} leftmargin={columnwidth * 1 + 1} ></RoadmapContent>
+
+                <RoadmapContent title={'Execute JS on Event'} path={'/roadmapcontent/JSExecuteEvents'} topmargin={73} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Event Listeners'} path={'/roadmapcontent/JSEventListeners'} topmargin={80} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+
+                <RoadmapContent title={'Asynchronous JS'} path={'/roadmapcontent/JSAsynchronous'} topmargin={70} leftmargin={columnwidth * 3} ></RoadmapContent>
+
+                <RoadmapContent title={'Callbacks'} path={'/roadmapcontent/JSCallbacks'} topmargin={67} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Promises'} path={'/roadmapcontent/JSPromises'} topmargin={71} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+
+                <RoadmapContent title={'Callbacks'} path={'/roadmapcontent/JSCallbacks'} topmargin={78} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Promises'} path={'/roadmapcontent/JSPromises'} topmargin={82} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+
+                <RoadmapContent title={'Fetch API'} path={'/roadmapcontent/JSFetchAPI'} topmargin={78} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
 
                 <RoadmapContent title={'Finish'} path={'#'} topmargin={95} leftmargin={columnwidth * 2 + 1} ></RoadmapContent>
             </div>
