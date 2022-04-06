@@ -1,0 +1,43 @@
+.modal {
+    position: absolute;
+    display: none;
+    width: 80%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 99;
+}
+
+.modal-info {
+    background-color: white;
+    border-radius: 5px;
+    margin: 25% 25% 25% 25%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.modal-title {
+    background-color: rgba(0, 0, 0, 0);
+    padding-bottom: 10px;
+}
+
+.modal-body {
+    background-color: rgba(0, 0, 0, 0);
+    padding-bottom: 10px;
+}
+
+.link-stack {
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+
+.complete-button {
+    background-color: rgb(10, 138, 3);
+}
+
+.goback-button {
+    background-color: rgb(255, 21, 0);
+}

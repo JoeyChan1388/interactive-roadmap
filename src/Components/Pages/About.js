@@ -6,7 +6,7 @@ const About = () => {
 
     return (
     <div>
-        <a className="about-img"><img class="background" src="/about.jpg" alt="background"/></a>
+        <a className="about-img"><img className="background" src="/about.jpg" alt="background"/></a>
         <h1 className="about-title">About Us </h1>
         <p1 className="header-about">We are a group of CPA students from Durham College in our final semester
         and were given the oppurtunity to create a website to demonstrate all of our skills we have learned

@@ -2,11 +2,9 @@ import React from 'react'
 
 const RoadmapContent = (props) => {
   return (
-    <a href={props.path}>
-    <button className="roadmap-content" style={{'margin-top': props.topmargin+'%', 'margin-left': props.leftmargin+'%'}} >
+    <button className="roadmap-content" style={{'marginTop': props.topmargin+'%', 'marginLeft': props.leftmargin+'%'}} onClick={props.onClick} >
         <h1> {props.title} </h1>    
     </button>
-    </a>
     
   )
 }

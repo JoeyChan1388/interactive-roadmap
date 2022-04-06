@@ -30,6 +30,7 @@
     border: 1px solid;
     padding: 1% 2% 1% 2%;
     max-width: 200px;
+    z-index: 1;
 }
 
 h1 {

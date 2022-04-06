@@ -1,20 +1,83 @@
 import React from 'react'
 import './Roadmap.css'
+import InfoModal from './InfoModal';
 import RoadmapContent from './RoadmapContent';
+import Line from './Pages/Line';
+import { useState } from 'react'
+
+// Runs whenever the modal is called up.
+const DisplayModal = (newTitle, newBody, link1Display, link1Path, link2Display, link2Path, link3Display, link3Path) => {
+    const modal = document.getElementById('infoModal');
+    modal.style.display = 'block';
+    // Change the title and body of the modal
+    document.getElementById('title').innerHTML = newTitle;
+    document.getElementById('body').innerHTML = newBody;
+
+    // Change the links of the modal, if they exist.
+    if (link1Display !== undefined) {
+        document.getElementById('link1').innerHTML = link1Display;
+        document.getElementById('link1').href = link1Path;
+    } else {
+        document.getElementById('link1').style.display = 'none';
+    }
+
+    if (link2Display !== undefined) {
+        document.getElementById('link2').innerHTML = link2Display;
+        document.getElementById('link2').href = link2Path;
+    } else {
+        document.getElementById('link2').style.display = 'none';
+    }
+
+    if (link3Display !== undefined) {
+        document.getElementById('link3').innerHTML = link3Display;
+        document.getElementById('link3').href = link3Path;
+    } else {
+        document.getElementById('link3').style.display = 'none';
+    }
+}
+
+
 
 const Roadmap = (props) => {
+    const onComplete = () => {
+        var tableName = props.type + '_progress';
+        var colName = 'completed_' + currentNode;
+
+        console.log(tableName);
+        console.log(colName);
+    }
+
+    const [currentNode, SetCurrentNode] = useState('');
+
     if (props.type === 'HTML') {
         return (
             <div className="roadmap">
-                <RoadmapContent title={'HTML'} path={'/roadmapcontent/HTML'} topmargin={1} leftmargin={38} ></RoadmapContent>
+                <InfoModal title={'infomodal'} body={'body'}> </InfoModal>
+
+                {document.getElementById('completebutton').addEventListener('click', onComplete)}
+
+                <RoadmapContent
+                    title={'HTML'}
+                    onClick={() => {
+                        SetCurrentNode('HTML');
+                        DisplayModal('HTML',
+                            'This is HTML, it is used to create websites!',
+                            'W3Schools',
+                            'https://www.w3schools.com/html/default.asp',
+                        )
+                    }}
+                    topmargin={1}
+                    leftmargin={38}
+                > </RoadmapContent>
+
                 <RoadmapContent title={'Creating HTML Documents'} path={'/roadmapcontent/HTMLDocuments'} topmargin={8} leftmargin={36} ></RoadmapContent>
 
                 <RoadmapContent title={'HTML Document Structure'} path={'/roadmapcontent/HTMLDocumentStructure'} topmargin={8} leftmargin={18} ></RoadmapContent>
-                <RoadmapContent title={'HTML Tag'} path={'/roadmapcontent/HTMLTag'} topmargin={3} leftmargin={5} ></RoadmapContent>
-                <RoadmapContent title={'Doctype'} path={'/roadmapcontent/Doctype'} topmargin={7} leftmargin={5} ></RoadmapContent>
-                <RoadmapContent title={'Title'} path={'/roadmapcontent/Title'} topmargin={11} leftmargin={5} ></RoadmapContent>
+                <RoadmapContent title={'HTML Tag'} path={'/roadmapcontent/HTMLTag'} topmargin={5} leftmargin={5} ></RoadmapContent>
+                <RoadmapContent title={'Doctype'} path={'/roadmapcontent/Doctype'} topmargin={9} leftmargin={5} ></RoadmapContent>
+                <RoadmapContent title={'Title'} path={'/roadmapcontent/Title'} topmargin={13} leftmargin={5} ></RoadmapContent>
 
-                <RoadmapContent title={'Elements'} path={'/roadmapcontent/HTMLElements'} topmargin={8} leftmargin={55} ></RoadmapContent>
+                <RoadmapContent title={'Elements'} path={'/roadmapcontent/HTMLElements'} topmargin={9} leftmargin={55} ></RoadmapContent>
                 <RoadmapContent title={'Head + Body + Div'} path={'/roadmapcontent/HTMLHeadBodyDiv'} topmargin={3} leftmargin={66} ></RoadmapContent>
                 <RoadmapContent title={'Headings + Paragraphs'} path={'/roadmapcontent/HTMLHeadingsParagraphs'} topmargin={8} leftmargin={66} ></RoadmapContent>
                 <RoadmapContent title={'Tables + Lists'} path={'/roadmapcontent/HTMLTablesLists'} topmargin={13} leftmargin={66} ></RoadmapContent>
@@ -37,6 +100,9 @@ const Roadmap = (props) => {
                 <RoadmapContent title={'Input Validation'} path={'/roadmapcontent/HTMLTablesLists'} topmargin={49} leftmargin={66} ></RoadmapContent>
 
                 <RoadmapContent title={'Finish'} path={'#'} topmargin={65} leftmargin={38} ></RoadmapContent>
+
+                <Line start={{ x: 51.5, y: 45 }} end={{ x: 51.5, y: 300 }} color={'Black'} width={3} ></Line>
+
             </div>
         )
     } else if (props.type === 'CSS') {
@@ -91,7 +157,7 @@ const Roadmap = (props) => {
 
                 <RoadmapContent title={'Integer'} path={'/roadmapcontent/C#Integers'} topmargin={20} leftmargin={columnwidth * 4 + 3} ></RoadmapContent>
                 <RoadmapContent title={'Float'} path={'/roadmapcontent/C#Floats'} topmargin={24} leftmargin={columnwidth * 4 + 3} ></RoadmapContent>
-            
+
                 <RoadmapContent title={'Interacting With Data'} path={'/roadmapcontent/C#InteractingData'} topmargin={40} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
 
                 <RoadmapContent title={'Math Functions'} path={'/roadmapcontent/C#MathFunctions'} topmargin={40} leftmargin={columnwidth * 3 + 3} ></RoadmapContent>
@@ -106,7 +172,7 @@ const Roadmap = (props) => {
 
                 <RoadmapContent title={'Console.Writeline'} path={'/roadmapcontent/C#Console Methods'} topmargin={48} leftmargin={columnwidth * 4 + 8} ></RoadmapContent>
                 <RoadmapContent title={'Console.Readline'} path={'/roadmapcontent/C#Console Methods'} topmargin={52} leftmargin={columnwidth * 4 + 8} ></RoadmapContent>
-            
+
                 <RoadmapContent title={'Conditionals'} path={'/roadmapcontent/C#Conditionals'} topmargin={65} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
 
                 <RoadmapContent title={'For Loop'} path={'/roadmapcontent/C#ForLoop'} topmargin={63} leftmargin={columnwidth * 1} ></RoadmapContent>
@@ -127,7 +193,7 @@ const Roadmap = (props) => {
                 <RoadmapContent title={'JS'} path={'/roadmapcontent/JS'} topmargin={1} leftmargin={columnwidth * 2 + 3} ></RoadmapContent>
 
                 <RoadmapContent title={'Implementation'} path={'/roadmapcontent/JSImplementation'} topmargin={15} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
-                
+
                 <RoadmapContent title={'Inline JS'} path={'/roadmapcontent/JSInline'} topmargin={13} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
                 <RoadmapContent title={'SRC Tag'} path={'/roadmapcontent/JSExternal'} topmargin={17} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
 
