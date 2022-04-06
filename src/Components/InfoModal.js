@@ -18,9 +18,7 @@ function InfoModal(props) {
                     <a href='/' id='link3' >Link 3</a>
                 </div>
 
-                <button className='complete-button' id='completebutton' onClick={() => {
-                    document.getElementById('infoModal').style.display = 'none';
-                }}>Complete</button>
+                <button className='complete-button' id='completebutton'>Complete</button>
 
                 <button className='goback-button' onClick={() => {
                     document.getElementById('infoModal').style.display = 'none';

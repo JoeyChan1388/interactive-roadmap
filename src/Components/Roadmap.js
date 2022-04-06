@@ -4,6 +4,9 @@ import InfoModal from './InfoModal';
 import RoadmapContent from './RoadmapContent';
 import Line from './Pages/Line';
 import { useState } from 'react'
+import {useAuth} from '../Firebase/AuthContext';
+import axios from 'axios';
+
 
 // Runs whenever the modal is called up.
 const DisplayModal = (newTitle, newBody, link1Display, link1Path, link2Display, link2Path, link3Display, link3Path) => {
@@ -36,25 +39,35 @@ const DisplayModal = (newTitle, newBody, link1Display, link1Path, link2Display, 
     }
 }
 
-
-
 const Roadmap = (props) => {
-    const onComplete = () => {
-        var tableName = props.type + '_progress';
-        var colName = 'completed_' + currentNode;
-
-        console.log(tableName);
-        console.log(colName);
-    }
-
     const [currentNode, SetCurrentNode] = useState('');
+
+    const { currentUser } = useAuth();
+
+    const onComplete = () => {
+        if (currentNode) {
+            var tableName = props.type + '_progress';
+            var colName = 'completed_' + currentNode;
+    
+            console.log(tableName);
+            console.log(colName);
+
+            document.getElementById('infoModal').style.display = 'none';
+
+            // send axios request to update the database using the tableName and colName
+            axios.post('http://localhost:3001/progress/update', {
+                tableName: tableName,
+                colName: colName,
+                userId: currentUser.uid
+            });
+
+        }
+    }
 
     if (props.type === 'HTML') {
         return (
             <div className="roadmap">
                 <InfoModal title={'infomodal'} body={'body'}> </InfoModal>
-
-                {document.getElementById('completebutton').addEventListener('click', onComplete)}
 
                 <RoadmapContent
                     title={'HTML'}
@@ -65,6 +78,7 @@ const Roadmap = (props) => {
                             'W3Schools',
                             'https://www.w3schools.com/html/default.asp',
                         )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
                     }}
                     topmargin={1}
                     leftmargin={38}
@@ -101,7 +115,55 @@ const Roadmap = (props) => {
 
                 <RoadmapContent title={'Finish'} path={'#'} topmargin={65} leftmargin={38} ></RoadmapContent>
 
-                <Line start={{ x: 51.5, y: 45 }} end={{ x: 51.5, y: 300 }} color={'Black'} width={3} ></Line>
+                { /**** Line Section ****/ }
+
+                { /* HTML LINE*/ }  
+                <Line start={{ x: 51, y: 35 }} end={{ x: 51, y: 127 }} color={'Black'} width={3} ></Line>
+
+                { /*Creating HTML Documents ----> HTML Docuemnt Structure LINE*/ }
+                <Line start={{ x: 40, y: 50 }} end={{ x: 50, y: 20 }} color={'Black'} width={3} ></Line>
+
+                { /* HTML Docuemnt Structure Line ----> Doctype/HTML Tag/Title*/ }
+                <Line start={{ x: 15, y: 50 }} end={{ x: 40, y: 20 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 15, y: 60 }} end={{ x: 33, y: 20 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 15, y: 42 }} end={{ x: 33, y: 20 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 33, y: 42 }} end={{ x: 33, y: 60.6 }} color={'Black'} width={3} ></Line>
+
+                { /* Creating HTML Documents  ----> Elements LINE */ }
+                <Line start={{ x: 50, y: 50 }} end={{ x: 70, y: 20 }} color={'Black'} width={3} ></Line>
+                
+                { /* Elements  ----> Head + Body/Headings + Paragraphs/ Tables + Lists LINE */ }
+                <Line start={{ x: 50, y: 50 }} end={{ x: 70, y: 20 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x:50, y: 50 }} end={{ x: 80, y: 20 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x:69, y: 40 }} end={{ x: 80, y: 20 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x:69, y: 59 }} end={{ x: 80, y: 30 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x:69, y: 40.5 }} end={{ x: 15, y: 59 }} color={'Black'} width={3} ></Line>
+                
+                { /* Accepting User Inputs ----> Attributes LINE */ }
+                <Line start={{ x: 56.5, y: 79 }} end={{ x: 65, y: 30 }} color={'Black'} width={3} ></Line>
+
+                { /* Attributes ----> Hyperlinks/ Images/ Title + Lang LINE */ }
+                <Line start={{ x: 73, y: 79 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 69.5, y: 71 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 69.5, y: 87.5 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 69.5, y: 71 }} end={{ x: 15, y: 88 }} color={'Black'} width={3} ></Line>
+
+                { /* Finish ----> Forms LINE */ }
+                <Line start={{ x: 54, y: 123.5 }} end={{ x: 65, y: 30 }} color={'Black'} width={3} ></Line>
+
+                { /* Form ----> Label/Input Elements/ Input Validation LINE */ }
+                <Line start={{ x: 56.5, y: 123.5 }} end={{ x: 77, y: 30 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 69.5, y: 115.5 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 69.5, y: 133 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 69.5, y: 115.5 }} end={{ x: 15, y: 133 }} color={'Black'} width={3} ></Line>
+
+                { /* Finish ----> Events LINE */ }
+                <Line start={{ x: 20, y: 123.5 }} end={{ x: 50, y: 20 }} color={'Black'} width={3} ></Line>
+
+                { /* Events ----> Media/Moust Events LINE */ }
+                <Line start={{ x: 20, y: 134 }} end={{ x: 35.5, y: 20 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x: 20, y: 115.5 }} end={{ x: 35.5, y: 20 }} color={'Black'} width={3} ></Line>
+                <Line start={{ x:35.5, y: 115.5 }} end={{ x: 15, y: 134.7 }} color={'Black'} width={3} ></Line>
 
             </div>
         )

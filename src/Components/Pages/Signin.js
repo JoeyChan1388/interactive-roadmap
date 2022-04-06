@@ -11,14 +11,10 @@ function Signin() {
 
   async function onSignIn() {
     await login(email, password);
-
-    if (currentUser) {
-      navigation("/");
-    }
   }
 
   if (currentUser) {
-    logout();
+    navigation("/");
   }
 
   return (
@@ -42,6 +38,7 @@ function Signin() {
             </input>
 
             <input type="submit" className="btn-submit" value="Sign in" onClick={onSignIn}/>
+
             <br/>
             <a href="/signup" className="link"> Need an Account?</a>
         </div>

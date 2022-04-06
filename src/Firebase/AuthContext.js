@@ -17,6 +17,10 @@ export function AuthProvider({ children }) {
 		return auth.createUserWithEmailAndPassword(email, password);
 	}
 
+	function deleteAccount() {
+		return auth.currentUser.delete();
+	}
+
 	function login(email, password) {
 		return auth.signInWithEmailAndPassword(email, password);
 	}
@@ -53,7 +57,8 @@ export function AuthProvider({ children }) {
 		logout,
 		resetPassword,
 		updateEmail,
-		updatePassword
+		updatePassword,
+		deleteAccount,
 	};
 
 	// Return authcontext with functions as props

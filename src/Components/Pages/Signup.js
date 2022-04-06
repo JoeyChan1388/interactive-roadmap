@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../Firebase/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -13,47 +13,39 @@ function Signup() {
   const [loading, setLoading] = useState(false)
   const navigation = useNavigate();
 
-  const { signup, currentUser } = useAuth();
+  const { signup, deleteAccount, currentUser } = useAuth();
 
-  async function storeUserInfo() {
-    try {
-      await axios.post('http://localhost:3001/user/create', {
-        userid: currentUser.uid,
-        userName: userName,
-        email: email,
-      }).then((response) => {
-        console.log(response);
-      });
-    } catch (e) {
-      console.log(e);
-    } finally {
-      if (currentUser) {
-        navigation('/')
+  useEffect(() => {
+    if (currentUser) {
+      try {
+        axios.post('http://localhost:3001/user/create', {
+          userid: currentUser.uid,
+          userName: userName,
+          email: email,
+        }).then((response) => {
+          console.log(response);
+          console.log('User created successfully, rerouting');
+          navigation('/');
+        });
+      } catch (e) {
+        console.log(e);
+        currentUser.delete().then(() => {
+          console.log('Database failed, user rolled back');
+        });
       }
     }
-  }
+  }, [currentUser, userName, email, navigation]);
 
   // Signup button click
   async function onSignUp() {
     try {
       setLoading(true);
-      await signup(email, password);
+      await signup(email, password)
     }
     catch (e) {
       console.log(e)
-    } finally {
-      if (currentUser) {
-        console.log('Attempting Database Store')
-        await storeUserInfo()
-      } else {
-        setLoading(false)
-      }
-    }
+    } 
   };
-
-  if (currentUser) {
-    navigation.push("/");
-  }
 
   return (
     <div>

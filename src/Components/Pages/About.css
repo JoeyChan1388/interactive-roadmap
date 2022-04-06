@@ -2,7 +2,7 @@
 {
 
     position: absolute;
-    width: 1700px;
+    width: 100%;
     height: 600px;
     left: 0px;
     top: 152px;
@@ -17,7 +17,7 @@
 position: absolute;
 width: 694px;
 height: 244px;
-left: 800px;
+left: 600px;
 top: 200px;
 
 font-family: 'Cabin Sketch';
@@ -34,7 +34,7 @@ background-color: rgba(0, 0, 0, 0);
 .header-about
 {
 position: absolute;
-width: 1920px;
+width: 80%;
 height: 200px;
 left: 60px;
 top: 400px;

@@ -30,7 +30,7 @@ function App() {
             <Route exact path="/signup" element={<Signup />} />
             <Route exact path="/about" element={<About />} />
             <Route exact path="/contact" element={<Contact />} />
-            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/users/:uid" element={<Profile />} />
           </Routes>
         </Router>
       </AuthProvider>
