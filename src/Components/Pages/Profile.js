@@ -6,25 +6,52 @@ import { useParams } from 'react-router-dom';
 
 export const Profile = (props) => {
     const { uid } = useParams();
+    const { currentUser } = useAuth();
     const [userName, setUserName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [description, setDescription] = useState('');
 
-    const { currentUser } = useAuth();
+    const [htmlProgress, setHtmlProgress] = useState(0);
+    const maxHtmlProgress = 5;
 
-    console.log(uid);
+    const [cssProgress, setCssProgress] = useState(0);
+    const maxCssProgress = 4;
 
+    const [csharpProgress, setCsharpProgress] = useState(0);
+    const maxCsharpProgress = 5;
+
+    const [jsProgress, setJsProgress] = useState(0);
+    const maxJsProgress = 6;
+
+    // Get user information from database
     axios.get('http://localhost:3001/user/get', {
         params: {
             id: uid
         }
     }).then((response) => {
-        console.log(response.data[0]);
         setUserName(response.data[0].user_displayname);
         setFirstName(response.data[0].user_first_name);
         setLastName(response.data[0].user_last_name);
         setDescription(response.data[0].user_description);
+    });
+
+    // Get number of HTML nodes completed from database
+    axios.get('http://localhost:3001/progress/count/html', {
+        params: {
+            userId: uid
+        }
+    }).then((response) => {
+        setHtmlProgress(response.data[0].htmlnodescompleted);
+    });
+
+    // Get number of js nodes completed from database
+    axios.get('http://localhost:3001/progress/count/js', {
+        params: {
+            userId: uid
+        }
+    }).then((response) => {
+        setJsProgress(response.data[0].jsnodescompleted);
     });
 
     return (
@@ -39,7 +66,7 @@ export const Profile = (props) => {
                 <div className="progression-row">
                     <h2 className="profile-header-2"> HTML </h2>
                     <div className="progress-bar-back" >
-                        <div className="progress-bar-red"> </div>
+                        <div id="htmlbar" className="progress-bar-red" style={{width: `${(htmlProgress/maxHtmlProgress) * 100 }%` }}> </div>
                     </div>
                 </div>
 
@@ -60,7 +87,7 @@ export const Profile = (props) => {
                 <div className="progression-row">
                     <h2 className="profile-header-2"> JS </h2>
                     <div className="progress-bar-back" >
-                        <div className="progress-bar-green"> </div>
+                        <div className="progress-bar-green" style={{width: `${(jsProgress/maxJsProgress) * 100 }%` }}> </div>
                     </div>
                 </div>
 

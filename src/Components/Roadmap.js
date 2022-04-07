@@ -2,53 +2,71 @@ import React from 'react'
 import './Roadmap.css'
 import InfoModal from './InfoModal';
 import RoadmapContent from './RoadmapContent';
-import Line from './Pages/Line';
 import { useState } from 'react'
-import {useAuth} from '../Firebase/AuthContext';
+import { useAuth } from '../Firebase/AuthContext';
 import axios from 'axios';
 
-
-// Runs whenever the modal is called up.
-const DisplayModal = (newTitle, newBody, link1Display, link1Path, link2Display, link2Path, link3Display, link3Path) => {
-    const modal = document.getElementById('infoModal');
-    modal.style.display = 'block';
-    // Change the title and body of the modal
-    document.getElementById('title').innerHTML = newTitle;
-    document.getElementById('body').innerHTML = newBody;
-
-    // Change the links of the modal, if they exist.
-    if (link1Display !== undefined) {
-        document.getElementById('link1').innerHTML = link1Display;
-        document.getElementById('link1').href = link1Path;
-    } else {
-        document.getElementById('link1').style.display = 'none';
-    }
-
-    if (link2Display !== undefined) {
-        document.getElementById('link2').innerHTML = link2Display;
-        document.getElementById('link2').href = link2Path;
-    } else {
-        document.getElementById('link2').style.display = 'none';
-    }
-
-    if (link3Display !== undefined) {
-        document.getElementById('link3').innerHTML = link3Display;
-        document.getElementById('link3').href = link3Path;
-    } else {
-        document.getElementById('link3').style.display = 'none';
-    }
-}
-
 const Roadmap = (props) => {
-    const [currentNode, SetCurrentNode] = useState('');
-
+    let currentNode = '';
+    let currentNodeCompleted = false;
     const { currentUser } = useAuth();
+
+    // Runs whenever the modal is called up.
+    async function DisplayModal(newTitle, newBody, completeable, link1Display, link1Path, link2Display, link2Path, link3Display, link3Path) {
+        const modal = document.getElementById('infoModal');
+        modal.style.display = 'block';
+        // Change the title and body of the modal
+        document.getElementById('title').innerHTML = newTitle;
+        document.getElementById('body').innerHTML = newBody;
+
+        // Change the links of the modal, if they exist.
+        if (link1Display !== undefined) {
+            document.getElementById('link1').innerHTML = link1Display;
+            document.getElementById('link1').href = link1Path;
+        } else {
+            document.getElementById('link1').style.display = 'none';
+        }
+
+        if (link2Display !== undefined) {
+            document.getElementById('link2').innerHTML = link2Display;
+            document.getElementById('link2').href = link2Path;
+        } else {
+            document.getElementById('link2').style.display = 'none';
+        }
+
+        if (link3Display !== undefined) {
+            document.getElementById('link3').innerHTML = link3Display;
+            document.getElementById('link3').href = link3Path;
+        } else {
+            document.getElementById('link3').style.display = 'none';
+        }
+
+        // If its a completable node, show the complete button.
+        if (completeable) {
+            await CheckIfComplete();
+
+            if (currentNodeCompleted === true) {
+                document.getElementById('completebutton').disabled = true;
+                document.getElementById('completebutton').innerHTML = 'Completed';
+                document.getElementById('completebutton').style.backgroundColor = '#90c9da';
+                document.getElementById('completebutton').style.cursor = 'default';
+            } else {
+                document.getElementById('completebutton').disabled = false;
+                document.getElementById('completebutton').style.display = 'inline';
+                document.getElementById('completebutton').innerHTML = 'Complete';
+                document.getElementById('completebutton').style.backgroundColor = 'rgb(10, 138, 3)';
+                document.getElementById('completebutton').style.cursor = 'pointer';
+            }
+        } else {
+            document.getElementById('completebutton').style.display = 'none';
+        }
+    }
 
     const onComplete = () => {
         if (currentNode) {
             var tableName = props.type + '_progress';
-            var colName = 'completed_' + currentNode;
-    
+            var colName = currentNode + '_completed';
+
             console.log(tableName);
             console.log(colName);
 
@@ -64,6 +82,22 @@ const Roadmap = (props) => {
         }
     }
 
+    async function CheckIfComplete() {
+        var tableName = props.type + '_progress';
+        var colName = currentNode + '_completed';
+
+        await axios.get('http://localhost:3001/progress/check', {
+            params: {
+                tableName: tableName,
+                colName: colName,
+                userId: currentUser.uid
+            }
+        }).then(response => {
+            console.log(response.data);
+            currentNodeCompleted = response.data;
+        });
+    }
+
     if (props.type === 'HTML') {
         return (
             <div className="roadmap">
@@ -72,11 +106,12 @@ const Roadmap = (props) => {
                 <RoadmapContent
                     title={'HTML'}
                     onClick={() => {
-                        SetCurrentNode('HTML');
                         DisplayModal('HTML',
                             'This is HTML, it is used to create websites!',
+                            false,
                             'W3Schools',
                             'https://www.w3schools.com/html/default.asp',
+
                         )
                         document.getElementById('completebutton').addEventListener('click', onComplete)
                     }}
@@ -84,86 +119,144 @@ const Roadmap = (props) => {
                     leftmargin={38}
                 > </RoadmapContent>
 
-                <RoadmapContent title={'Creating HTML Documents'} path={'/roadmapcontent/HTMLDocuments'} topmargin={8} leftmargin={36} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Creating HTML Documents'}
+                    onClick={() => {
+                        DisplayModal('Creating HTML Documents',
+                            'HTML Documents are computer files',
+                            false,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={8}
+                    leftmargin={36}
 
-                <RoadmapContent title={'HTML Document Structure'} path={'/roadmapcontent/HTMLDocumentStructure'} topmargin={8} leftmargin={18} ></RoadmapContent>
+                ></RoadmapContent>
+
+                <RoadmapContent
+                    title={'HTML Document Structure'}
+                    onClick={() => {
+                        currentNode = 'html_doc_structure';
+                        DisplayModal('HTML document structure',
+                            'HTML documents are made up of different tags. These tags are used to create the structure of the document in the web browser. View the sub-nodes and click \'Complete\' to continue.',
+                            true,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={8}
+                    leftmargin={18}
+                ></RoadmapContent>
+
                 <RoadmapContent title={'HTML Tag'} path={'/roadmapcontent/HTMLTag'} topmargin={5} leftmargin={5} ></RoadmapContent>
                 <RoadmapContent title={'Doctype'} path={'/roadmapcontent/Doctype'} topmargin={9} leftmargin={5} ></RoadmapContent>
                 <RoadmapContent title={'Title'} path={'/roadmapcontent/Title'} topmargin={13} leftmargin={5} ></RoadmapContent>
 
-                <RoadmapContent title={'Elements'} path={'/roadmapcontent/HTMLElements'} topmargin={9} leftmargin={55} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Elements'}
+                    onClick={() => {
+                        currentNode = 'html_elements';
+                        DisplayModal('Elements',
+                            'Elements are the building blocks of HTML. They are used to create the structure of the document in the web browser. View the sub-nodes and click \'Complete\' to continue.',
+                            true,
+
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={8.5}
+                    leftmargin={55}
+                ></RoadmapContent>
+
                 <RoadmapContent title={'Head + Body + Div'} path={'/roadmapcontent/HTMLHeadBodyDiv'} topmargin={3} leftmargin={66} ></RoadmapContent>
                 <RoadmapContent title={'Headings + Paragraphs'} path={'/roadmapcontent/HTMLHeadingsParagraphs'} topmargin={8} leftmargin={66} ></RoadmapContent>
                 <RoadmapContent title={'Tables + Lists'} path={'/roadmapcontent/HTMLTablesLists'} topmargin={13} leftmargin={66} ></RoadmapContent>
 
-                <RoadmapContent title={'Attributes'} path={'/roadmapcontent/HTMLAttributes'} topmargin={23} leftmargin={55} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Attributes'}
+                    onClick={() => {
+                        currentNode = 'html_attributes';
+                        DisplayModal('Attributes',
+                            'Attributes are used to add additional information to elements. View the sub-nodes and click \'Complete\' to continue.',
+                            true,
+
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={23}
+                    leftmargin={55}
+                ></RoadmapContent>
+
                 <RoadmapContent title={'Hyperlinks'} path={'/roadmapcontent/HTMLHyperlinks'} topmargin={19} leftmargin={66} ></RoadmapContent>
                 <RoadmapContent title={'Images'} path={'/roadmapcontent/HTMLImages'} topmargin={23} leftmargin={66} ></RoadmapContent>
                 <RoadmapContent title={'Title + Lang'} path={'/roadmapcontent/HTMLTitlesLang'} topmargin={27} leftmargin={66} ></RoadmapContent>
 
-                <RoadmapContent title={'Accepting User Input'} path={'/roadmapcontent/HTMLUserInput'} topmargin={45} leftmargin={36} ></RoadmapContent>
+                <RoadmapContent title={'Accepting User Input'} path={'/roadmapcontent/HTMLUserInput'} topmargin={44.5} leftmargin={36} ></RoadmapContent>
 
-                <RoadmapContent title={'Events'} path={'/roadmapcontent/HTMLDocumentStructure'} topmargin={45} leftmargin={22} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Events'}
+                    onClick={() => {
+                        currentNode = 'html_events';
+                        DisplayModal('Events',
+                            'Events are used to add functionality to elements. View the sub-nodes and click \'Complete\' to continue.',
+                            true,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={45}
+                    leftmargin={22}
+                ></RoadmapContent>
                 <RoadmapContent title={'Media Events'} path={'/roadmapcontent/HTMLTag'} topmargin={41} leftmargin={5} ></RoadmapContent>
                 <RoadmapContent title={'Keyboard Events'} path={'/roadmapcontent/Doctype'} topmargin={45} leftmargin={5} ></RoadmapContent>
-                <RoadmapContent title={'Mouse Events'} path={'/roadmapcontent/Title'} topmargin={49} leftmargin={5} ></RoadmapContent>
+                <RoadmapContent title={'Mouse Events'} path={'/roadmapcontent/Title'} topmargin={50} leftmargin={5} ></RoadmapContent>
 
-                <RoadmapContent title={'Forms'} path={'/roadmapcontent/HTMLElements'} topmargin={45} leftmargin={55} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Forms'}
+                    onClick={() => {
+                        currentNode = 'html_forms';
+                        DisplayModal('Forms',
+                            'Forms are used to collect information from the user. View the sub-nodes and click \'Complete\' to continue.',
+                            true,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={45}
+                    leftmargin={55}
+                ></RoadmapContent>
+
                 <RoadmapContent title={'Label'} path={'/roadmapcontent/HTMLHeadBodyDiv'} topmargin={41} leftmargin={66} ></RoadmapContent>
-                <RoadmapContent title={'Input Elements'} path={'/roadmapcontent/HTMLHeadingsParagraphs'} topmargin={45} leftmargin={66} ></RoadmapContent>
+                <RoadmapContent title={'Input Elements'} path={'/roadmapcontent/HTMLHeadingsParagraphs'} topmargin={44.5} leftmargin={66} ></RoadmapContent>
                 <RoadmapContent title={'Input Validation'} path={'/roadmapcontent/HTMLTablesLists'} topmargin={49} leftmargin={66} ></RoadmapContent>
 
-                <RoadmapContent title={'Finish'} path={'#'} topmargin={65} leftmargin={38} ></RoadmapContent>
+                <RoadmapContent title={'Finish'} path={'#'} topmargin={53} leftmargin={38} ></RoadmapContent>
 
-                { /**** Line Section ****/ }
-
-                { /* HTML LINE*/ }  
-                <Line start={{ x: 51, y: 35 }} end={{ x: 51, y: 127 }} color={'Black'} width={3} ></Line>
-
-                { /*Creating HTML Documents ----> HTML Docuemnt Structure LINE*/ }
-                <Line start={{ x: 40, y: 50 }} end={{ x: 50, y: 20 }} color={'Black'} width={3} ></Line>
-
-                { /* HTML Docuemnt Structure Line ----> Doctype/HTML Tag/Title*/ }
-                <Line start={{ x: 15, y: 50 }} end={{ x: 40, y: 20 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 15, y: 60 }} end={{ x: 33, y: 20 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 15, y: 42 }} end={{ x: 33, y: 20 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 33, y: 42 }} end={{ x: 33, y: 60.6 }} color={'Black'} width={3} ></Line>
-
-                { /* Creating HTML Documents  ----> Elements LINE */ }
-                <Line start={{ x: 50, y: 50 }} end={{ x: 70, y: 20 }} color={'Black'} width={3} ></Line>
-                
-                { /* Elements  ----> Head + Body/Headings + Paragraphs/ Tables + Lists LINE */ }
-                <Line start={{ x: 50, y: 50 }} end={{ x: 70, y: 20 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x:50, y: 50 }} end={{ x: 80, y: 20 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x:69, y: 40 }} end={{ x: 80, y: 20 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x:69, y: 59 }} end={{ x: 80, y: 30 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x:69, y: 40.5 }} end={{ x: 15, y: 59 }} color={'Black'} width={3} ></Line>
-                
-                { /* Accepting User Inputs ----> Attributes LINE */ }
-                <Line start={{ x: 56.5, y: 79 }} end={{ x: 65, y: 30 }} color={'Black'} width={3} ></Line>
-
-                { /* Attributes ----> Hyperlinks/ Images/ Title + Lang LINE */ }
-                <Line start={{ x: 73, y: 79 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 69.5, y: 71 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 69.5, y: 87.5 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 69.5, y: 71 }} end={{ x: 15, y: 88 }} color={'Black'} width={3} ></Line>
-
-                { /* Finish ----> Forms LINE */ }
-                <Line start={{ x: 54, y: 123.5 }} end={{ x: 65, y: 30 }} color={'Black'} width={3} ></Line>
-
-                { /* Form ----> Label/Input Elements/ Input Validation LINE */ }
-                <Line start={{ x: 56.5, y: 123.5 }} end={{ x: 77, y: 30 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 69.5, y: 115.5 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 69.5, y: 133 }} end={{ x: 76, y: 30 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 69.5, y: 115.5 }} end={{ x: 15, y: 133 }} color={'Black'} width={3} ></Line>
-
-                { /* Finish ----> Events LINE */ }
-                <Line start={{ x: 20, y: 123.5 }} end={{ x: 50, y: 20 }} color={'Black'} width={3} ></Line>
-
-                { /* Events ----> Media/Moust Events LINE */ }
-                <Line start={{ x: 20, y: 134 }} end={{ x: 35.5, y: 20 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x: 20, y: 115.5 }} end={{ x: 35.5, y: 20 }} color={'Black'} width={3} ></Line>
-                <Line start={{ x:35.5, y: 115.5 }} end={{ x: 15, y: 134.7 }} color={'Black'} width={3} ></Line>
+                {/* Line Section */}
+                <hr className='HTML-Line1'></hr>
+                <hr className='HTML-Line2'></hr>
+                <hr className='HTML-Line3'></hr>
+                <hr className='HTML-Line4'></hr>
+                <hr className='HTML-Line5'></hr>
+                <hr className='HTML-Line6'></hr>
+                <hr className='HTML-Line7'></hr>
+                <hr className='HTML-Line8'></hr>
+                <hr className='HTML-Line9'></hr>
+                <hr className='HTML-Line10'></hr>
+                <hr className='HTML-Line11'></hr>
+                <hr className='HTML-Line12'></hr>
+                <hr className='HTML-Line13'></hr>
+                <hr className='HTML-Line14'></hr>
+                <hr className='HTML-Line15'></hr>
+                <hr className='HTML-Line16'></hr>
+                <hr className='HTML-Line17'></hr>
+                <hr className='HTML-Line18'></hr>
+                <hr className='HTML-Line19'></hr>
+                <hr className='HTML-Line20'></hr>
+                <hr className='HTML-Line21'></hr>
+                <hr className='HTML-Line22'></hr>
+                <hr className='HTML-Line23'></hr>
+                <hr className='HTML-Line24'></hr>
+                <hr className='HTML-Line25'></hr>
+                <hr className='HTML-Line26'></hr>
+                <hr className='HTML-Line27'></hr>
+                <hr className='HTML-Line28'></hr>
 
             </div>
         )
@@ -252,51 +345,132 @@ const Roadmap = (props) => {
         const columnwidth = 14;
         return (
             <div className="roadmap-long">
+                <InfoModal title={'infomodal'} body={'body'}> </InfoModal>
+
                 <RoadmapContent title={'JS'} path={'/roadmapcontent/JS'} topmargin={1} leftmargin={columnwidth * 2 + 3} ></RoadmapContent>
 
-                <RoadmapContent title={'Implementation'} path={'/roadmapcontent/JSImplementation'} topmargin={15} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Implementation'}
+                    onClick={() => {
+                        currentNode = 'js_implementation';
+                        DisplayModal('Implementation',
+                            'You have to implement javascript into you html in order for it to operate, this can be done a few ways.',
+                            true,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={15}
+                    leftmargin={columnwidth * 2 - 1}
+                ></RoadmapContent>
 
                 <RoadmapContent title={'Inline JS'} path={'/roadmapcontent/JSInline'} topmargin={13} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
                 <RoadmapContent title={'SRC Tag'} path={'/roadmapcontent/JSExternal'} topmargin={17} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Data'} path={'/roadmapcontent/JSData'} topmargin={45} leftmargin={columnwidth * 2 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Data'} path={'/roadmapcontent/JSData'} topmargin={37} leftmargin={columnwidth * 2 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Data Types'} path={'/roadmapcontent/JSDataTypes'} topmargin={45} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
-                <RoadmapContent title={'Variables'} path={'/roadmapcontent/JSVariables'} topmargin={35} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Data Types'} path={'/roadmapcontent/JSDataTypes'} topmargin={37} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Variables'}
+                    onClick={() => {
+                        currentNode = 'js_variables';
+                        DisplayModal('Variables in Javascript',
+                            'Variables are used to store data, they are declared with the var, let, or const keywords, and can be assigned a value with the = operator.',
+                            true,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={25}
+                    leftmargin={columnwidth * 1 + 2}
+                ></RoadmapContent>
 
-                <RoadmapContent title={'Let'} path={'/roadmapcontent/JSVariablesLet'} topmargin={31} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
-                <RoadmapContent title={'Var'} path={'/roadmapcontent/JSVariablesVar'} topmargin={35} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
-                <RoadmapContent title={'Const'} path={'/roadmapcontent/JSVariablesConst'} topmargin={39} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Let'} path={'/roadmapcontent/JSVariablesLet'} topmargin={21} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Var'} path={'/roadmapcontent/JSVariablesVar'} topmargin={25} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Const'} path={'/roadmapcontent/JSVariablesConst'} topmargin={29} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
 
-                <RoadmapContent title={'Primatives'} path={'/roadmapcontent/JSPrimatives'} topmargin={55} leftmargin={columnwidth * 1 + 2} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Primatives'}
+                    onClick={() => {
+                        currentNode = 'js_primatives';
+                        DisplayModal('Primatives in Javascript',
+                            'Primatives are the basic data types in javascript, they are: strings, numbers, booleans, and undefined.',
+                            true,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={47}
+                    leftmargin={columnwidth * 1 + 2}
+                ></RoadmapContent>
 
-                <RoadmapContent title={'Null'} path={'/roadmapcontent/JSNull'} topmargin={51} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
-                <RoadmapContent title={'Boolean'} path={'/roadmapcontent/JSBoolean'} topmargin={55} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
-                <RoadmapContent title={'Number'} path={'/roadmapcontent/JSNumber'} topmargin={59} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'String'} path={'/roadmapcontent/JSNull'} topmargin={43} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Boolean'} path={'/roadmapcontent/JSBoolean'} topmargin={47} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Number'} path={'/roadmapcontent/JSNumber'} topmargin={51} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
 
-                <RoadmapContent title={'Data Structures'} path={'/roadmapcontent/JSDataStructures'} topmargin={45} leftmargin={columnwidth * 3} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Data Structures'}
+                    onClick={() => {
+                        currentNode = 'js_data_structures';
+                        DisplayModal('Data Structures in Javascript',
+                            'Data Structures are used to store collections of data, they are arrays and objects.',
+                            true,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={37}
+                    leftmargin={columnwidth * 3}
+                ></RoadmapContent>
 
-                <RoadmapContent title={'JSON'} path={'/roadmapcontent/JSDataStructuresJSON'} topmargin={43} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
-                <RoadmapContent title={'Arrays'} path={'/roadmapcontent/JSDataStructuresArrays'} topmargin={47} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'JSON'} path={'/roadmapcontent/JSDataStructuresJSON'} topmargin={35} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Arrays'} path={'/roadmapcontent/JSDataStructuresArrays'} topmargin={39} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Functionality'} path={'/roadmapcontent/JSFunctionality'} topmargin={80} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
+                <RoadmapContent title={'Functionality'} path={'/roadmapcontent/JSFunctionality'} topmargin={68} leftmargin={columnwidth * 2 - 1} ></RoadmapContent>
 
-                <RoadmapContent title={'Events'} path={'/roadmapcontent/JSEvents'} topmargin={80} leftmargin={columnwidth * 1 + 1} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Events'}
+                    onClick={() => {
+                        currentNode = 'js_events';
+                        DisplayModal('Events in Javascript',
+                            'Events are used to trigger actions in javascript, they are: onclick, onchange, onmouseover, etc.',
+                            true,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={68}
+                    leftmargin={columnwidth * 1 + 1}
+                ></RoadmapContent>
 
-                <RoadmapContent title={'Execute JS on Event'} path={'/roadmapcontent/JSExecuteEvents'} topmargin={73} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
-                <RoadmapContent title={'Event Listeners'} path={'/roadmapcontent/JSEventListeners'} topmargin={80} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Execute JS on Event'} path={'/roadmapcontent/JSExecuteEvents'} topmargin={62} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Event Listeners'} path={'/roadmapcontent/JSEventListeners'} topmargin={68} leftmargin={columnwidth * 0 + 1} ></RoadmapContent>
 
-                <RoadmapContent title={'Asynchronous JS'} path={'/roadmapcontent/JSAsynchronous'} topmargin={70} leftmargin={columnwidth * 3} ></RoadmapContent>
+                <RoadmapContent
+                    title={'Asynchronous JS'}
+                    onClick={() => {
+                        currentNode = 'js_async';
+                        DisplayModal('Asynchronous Javascript',
+                            'Asynchronous Javascript is used to make code run in the background, it is used to make a website load faster and feel more \'snappy\'.',
+                            true,
+                        )
+                        document.getElementById('completebutton').addEventListener('click', onComplete)
+                    }}
+                    topmargin={57}
+                    leftmargin={columnwidth * 3}
+                ></RoadmapContent>
 
-                <RoadmapContent title={'Callbacks'} path={'/roadmapcontent/JSCallbacks'} topmargin={67} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
-                <RoadmapContent title={'Promises'} path={'/roadmapcontent/JSPromises'} topmargin={71} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Callbacks'} path={'/roadmapcontent/JSCallbacks'} topmargin={55} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Promises'} path={'/roadmapcontent/JSPromises'} topmargin={59} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Fetch API'} path={'/roadmapcontent/JSFetchAPI'} topmargin={80} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Fetch API'} path={'/roadmapcontent/JSFetchAPI'} topmargin={68} leftmargin={columnwidth * 3 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Requests'} path={'/roadmapcontent/JSRequests'} topmargin={78} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
-                <RoadmapContent title={'Responses'} path={'/roadmapcontent/JSResponses'} topmargin={82} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Requests'} path={'/roadmapcontent/JSRequests'} topmargin={66} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
+                <RoadmapContent title={'Responses'} path={'/roadmapcontent/JSResponses'} topmargin={70} leftmargin={columnwidth * 4 + 2} ></RoadmapContent>
 
-                <RoadmapContent title={'Finish'} path={'#'} topmargin={95} leftmargin={columnwidth * 2 + 1} ></RoadmapContent>
+                <RoadmapContent title={'Finish'} path={'#'} topmargin={79} leftmargin={columnwidth * 2 + 1} ></RoadmapContent>
+
+                {/* LINE SECTION FOR JS */}
+                <hr className='JS-Line1'></hr>
+                <hr className='JS-Line2'></hr>
+                <hr className='JS-Line3'></hr>
+                <hr className='JS-Line4'></hr>
+                <hr className='JS-Line5'></hr>
             </div>
         )
     }
