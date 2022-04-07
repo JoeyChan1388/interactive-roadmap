@@ -11,6 +11,7 @@ import HTMLRoadmap from './Components/Pages/HTMLRoadmap';
 import CSSRoadmap from './Components/Pages/CSSRoadmap';
 import CSRoadmap from './Components/Pages/CSRoadmap';
 import Signup from './Components/Pages/Signup';
+import Roadmaps from './Components/Pages/Roadmaps';
 import { Profile } from './Components/Pages/Profile';
 import { AuthProvider } from './Firebase/AuthContext';
 
@@ -23,6 +24,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
+            <Route exact path="/roadmaps/" element={<Roadmaps />} />
             <Route exact path="/roadmaps/JS" element={<JSRoadmap />} />
             <Route exact path="/roadmaps/HTML" element={<HTMLRoadmap />} />
             <Route exact path="/roadmaps/CSS" element={<CSSRoadmap />} />

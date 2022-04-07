@@ -45,6 +45,24 @@ export const Profile = (props) => {
         setHtmlProgress(response.data[0].htmlnodescompleted);
     });
 
+    // Get number of CSS nodes completed from database
+    axios.get('http://localhost:3001/progress/count/css', {
+        params: {
+            userId: uid
+        }
+    }).then((response) => {
+        setCssProgress(response.data[0].cssnodescompleted);
+    });
+
+    // Get number of CSS nodes completed from database
+    axios.get('http://localhost:3001/progress/count/csharp', {
+        params: {
+            userId: uid
+        }
+    }).then((response) => {
+        setCsharpProgress(response.data[0].csharpnodescompleted);
+    });
+
     // Get number of js nodes completed from database
     axios.get('http://localhost:3001/progress/count/js', {
         params: {
@@ -73,14 +91,14 @@ export const Profile = (props) => {
                 <div className="progression-row">
                     <h2 className="profile-header-2"> CSS </h2>
                     <div className="progress-bar-back" >
-                        <div className="progress-bar-blue"> </div>
+                        <div className="progress-bar-blue" style={{width: `${(cssProgress/maxCssProgress) * 100 }%` }}> </div>
                     </div>
                 </div>
 
                 <div className="progression-row">
                     <h2 className="profile-header-2"> C-Sharp </h2>
                     <div className="progress-bar-back" >
-                        <div className="progress-bar-yellow"> </div>
+                        <div className="progress-bar-yellow" style={{width: `${(csharpProgress/maxCsharpProgress) * 100 }%` }}> </div>
                     </div>
                 </div>
 

@@ -22,6 +22,8 @@ function Signup() {
           userid: currentUser.uid,
           userName: userName,
           email: email,
+          firstName: firstName,
+          lastName: lastName,
         }).then((response) => {
           console.log(response);
           console.log('User created successfully, rerouting');
@@ -34,7 +36,7 @@ function Signup() {
         });
       }
     }
-  }, [currentUser, userName, email, navigation]);
+  }, [currentUser, userName, email, navigation, firstName, lastName]);
 
   // Signup button click
   async function onSignUp() {
@@ -43,6 +45,7 @@ function Signup() {
       await signup(email, password)
     }
     catch (e) {
+      navigation('/signup')
       console.log(e)
     } 
   };
