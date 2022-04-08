@@ -108,15 +108,6 @@ export const Profile = (props) => {
                         <div className="progress-bar-green" style={{width: `${(jsProgress/maxJsProgress) * 100 }%` }}> </div>
                     </div>
                 </div>
-
-                {/* If signed in AND current user is the same as the user being viewed, show edit button */}
-                {
-                    currentUser && currentUser.uid === uid && 
-                    <div className="action-row">
-                        <button className="btn-primary"> Change Account Details </button>
-                    </div>
-                }
-                
             </div>
 
         </div>

@@ -19,11 +19,17 @@
 
 .modal-title {
     background-color: rgba(0, 0, 0, 0);
+    font-size: 35px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bolder;
     padding-bottom: 10px;
 }
 
 .modal-body {
     background-color: rgba(0, 0, 0, 0);
+    font-size: 17px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bolder;
     padding-bottom: 10px;
 }
 
